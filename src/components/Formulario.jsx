@@ -34,7 +34,7 @@ import Error from './Error';
 
 
 */
-function Formulario({ setPacientes, pacientes } = props) {
+function Formulario({ setPacientes, pacientes, paciente } = props) {
 
   const [nombre, setNombre] = useState('');
   const [mail, setMail] = useState('');
@@ -43,6 +43,25 @@ function Formulario({ setPacientes, pacientes } = props) {
   const [sintomas, setSintomas] = useState('');
 
   const [error, setError] = useState(false);
+
+
+
+
+
+
+
+  useEffect(() => {
+    if(Object.keys(paciente).length > 0){
+      setNombre(paciente.nombre);
+      setMail(paciente.mail);
+      setMascota(paciente.mascota);
+      setAlta(paciente.alta);
+      setSintomas(paciente.sintomas);
+    }
+
+  }, [paciente]);
+
+
 
     const generarId = () => {
       return Math.random().toString(36) + Date.now().toString(36);
@@ -69,18 +88,26 @@ function Formulario({ setPacientes, pacientes } = props) {
       id : generarId()
     }
 
-    //Agregar objeto al state
+  if(paciente.id) {
+      ObjPaciente.id = paciente.id;
+      const ActPaciente = pacientes.map(paciente => paciente.id === ObjPaciente.id ? ObjPaciente : paciente);
+
+      setPacientes(ActPaciente);
+      setPacientes({});
+
+  }else{
+    ObjPaciente.id = generarId();
     setPacientes([...pacientes, ObjPaciente]);
 
+  }
+    //Agregar objeto al state
+   
     //reiniciar el form
     setNombre('');
     setMail('');
     setMascota('');
     setAlta('');
     setSintomas('');
-
-
-
   }
 
 
@@ -174,7 +201,7 @@ function Formulario({ setPacientes, pacientes } = props) {
         <input
           className="bg-indigo-500 cursor-pointer transition-all hover:bg-indigo-600 w-full mt-5 p-2 text-white uppercase font-bold"
           type="submit"
-          value="Agregar cita"
+          value={paciente.id ? "Editar cita":"Agregar cita"}
 
         />
       </form>

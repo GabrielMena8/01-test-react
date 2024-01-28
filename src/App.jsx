@@ -3,12 +3,16 @@ import { useState } from "react"
 import Formulario from "./components/Formulario"
 import Header from "./components/Header"
 import ListadoPacientes from "./components/ListadoPacientes"
-import Paciente from "./components/Paciente"
 
 function App() {
  const [pacientes, setPacientes] = useState([]); //Array de objetos
  const [paciente, setPaciente] = useState({}); //Objeto
 
+
+ const eliminarPaciente = id => {
+    const nuevosPacientes = pacientes.filter(paciente => paciente.id !== id);
+    setPacientes(nuevosPacientes);
+  }
   return (
     <div className="container mx-auto ">
 
@@ -20,7 +24,7 @@ function App() {
           setPacientes={setPacientes}
           pacientes={pacientes}
           paciente={paciente}
-          
+
 
 
 
@@ -28,6 +32,7 @@ function App() {
         <ListadoPacientes
           pacientes={pacientes}
           setPaciente={setPaciente}
+          eliminarPaciente={eliminarPaciente}
 
         />
       </div>

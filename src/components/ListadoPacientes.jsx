@@ -1,6 +1,7 @@
+import { useEffect } from "react"
 import Paciente from "./Paciente"
 
-function ListadoPacientes({pacientes, setPaciente}) {
+function ListadoPacientes({pacientes, setPaciente, eliminarPaciente}) {
   return (
     <div className="md:w-1/2 lg:w-3/5 md:h-screen overflow-y-scroll">
 
@@ -18,9 +19,10 @@ function ListadoPacientes({pacientes, setPaciente}) {
                 {
                 pacientes.map((paciente) => (
                     <Paciente 
-                      key={Math.random().toString(36).substr(2, 9)}
+                      key={Math.random().toString(36)}
                       paciente={paciente}
                       setPaciente={setPaciente}
+                      eliminarPaciente={eliminarPaciente}
                     />
                 ))}
 
